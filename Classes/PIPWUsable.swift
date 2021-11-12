@@ -16,7 +16,11 @@ public protocol PIPWUsable {
     var pipSize: CGSize { get }
     var pipShadow: PIPWShadow? { get }
     var pipCorner: PIPWCorner? { get }
+
+    func willChangeState(_ state: PIPWState)
+    func changingState(_ state: PIPWState)
     func didChangedState(_ state: PIPWState)
+
     func didChangePosition(_ position: PIPWPosition)
 }
 
@@ -33,7 +37,11 @@ public extension PIPWUsable {
             return PIPWCorner(radius: 6, curve: nil)
         }
     }
+
+    func willChangeState(_ state: PIPWState) {}
+    func changingState(_ state: PIPWState) {}
     func didChangedState(_ state: PIPWState) {}
+    
     func didChangePosition(_ position: PIPWPosition) {}
 }
 

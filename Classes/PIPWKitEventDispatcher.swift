@@ -44,6 +44,10 @@ open class PIPWKitEventDispatcher {
     }
     
     open func enterFullScreen() {
+
+        let rootViewController: PIPWUsable? = rootWindow?.rootViewController as? PIPWUsable
+        rootViewController?.willChangeState(.full)
+        
         UIView.animate(withDuration: 0.25, animations: { [weak self] in
             self?.updateFrame()
         }) { [weak self] (_) in
@@ -52,6 +56,10 @@ open class PIPWKitEventDispatcher {
     }
 
     open func enterPIP() {
+
+        let rootViewController: PIPWUsable? = rootWindow?.rootViewController as? PIPWUsable
+        rootViewController?.willChangeState(.pip)
+
         UIView.animate(withDuration: 0.25, animations: { [weak self] in
             self?.updateFrame()
         }) { [weak self] (_) in
@@ -64,12 +72,16 @@ open class PIPWKitEventDispatcher {
             let rootWindow = rootWindow else {
                 return
         }
+
+        let rootViewController: PIPWUsable? = rootWindow.rootViewController as? PIPWUsable
         
         switch PIPWKit.state {
         case .full:
             rootWindow.frame = mainWindow.bounds
+            rootViewController?.changingState(.full)
         case .pip:
             updatePIPFrame()
+            rootViewController?.changingState(.pip)
         default:
             break
         }

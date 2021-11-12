@@ -77,8 +77,10 @@ open class PIPWKit {
         self.floatingWindow?.makeKeyAndVisible()
         
         self.floatingWindow?.rootViewController?.view.alpha = 0.0
-        
-        state = (self.floatingWindow?.initialState == .pip) ? .pip : .full
+
+        let initialState = (viewController as? PIPWUsable)?.initialState ?? .full
+        state = (initialState == .pip) ? .pip : .full
+
         self.floatingWindow?.setupEventDispatcher()
         
         UIView.animate(withDuration: 0.25, animations: {

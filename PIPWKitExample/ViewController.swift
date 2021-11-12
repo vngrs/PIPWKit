@@ -84,13 +84,31 @@ class PIPViewController: UIViewController, PIPWUsable {
             PIPWKit.floatingWindow?.startPIPMode()
         }
     }
+
+    func willChangeState(_ state: PIPWState) {
+        switch state {
+        case .pip:
+            print("PIPViewController.willChangeState.pip")
+        case .full:
+            print("PIPViewController.willChangeState.full")
+        }
+    }
+
+    func changingState(_ state: PIPWState) {
+        switch state {
+        case .pip:
+            print("PIPViewController.changingState.pip")
+        case .full:
+            print("PIPViewController.changingState.full")
+        }
+    }
     
     func didChangedState(_ state: PIPWState) {
         switch state {
         case .pip:
-            print("PIPViewController.pip")
+            print("PIPViewController.didChangedState.pip")
         case .full:
-            print("PIPViewController.full")
+            print("PIPViewController.didChangedState.full")
         }
     }
 }
@@ -109,12 +127,30 @@ class PIPXibViewController: UIViewController, PIPWUsable {
         return viewController
     }
     
+    func willChangeState(_ state: PIPWState) {
+        switch state {
+        case .pip:
+            print("PIPViewController.willChangeState.pip")
+        case .full:
+            print("PIPViewController.willChangeState.full")
+        }
+    }
+
+    func changingState(_ state: PIPWState) {
+        switch state {
+        case .pip:
+            print("PIPViewController.changingState.pip")
+        case .full:
+            print("PIPViewController.changingState.full")
+        }
+    }
+
     func didChangedState(_ state: PIPWState) {
         switch state {
         case .pip:
-            print("PIPXibViewController.pip")
+            print("PIPViewController.didChangedState.pip")
         case .full:
-            print("PIPXibViewController.full")
+            print("PIPViewController.didChangedState.full")
         }
     }
     
