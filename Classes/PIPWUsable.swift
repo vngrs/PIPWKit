@@ -25,7 +25,7 @@ public protocol PIPWUsable {
 }
 
 public extension PIPWUsable {
-    var initialState: PIPWState { return .pip }
+    var initialState: PIPWState { return .full }
     var initialPosition: PIPWPosition { return .bottomRight }
     var pipEdgeInsets: UIEdgeInsets { return UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15) }
     var pipSize: CGSize { return CGSize(width: 200.0, height: (200.0 * 9.0) / 16.0) }
@@ -41,7 +41,7 @@ public extension PIPWUsable {
     func willChangeState(_ state: PIPWState) {}
     func changingState(_ state: PIPWState) {}
     func didChangedState(_ state: PIPWState) {}
-    
+
     func didChangePosition(_ position: PIPWPosition) {}
 }
 
@@ -56,15 +56,15 @@ public extension PIPWUsable where Self: PIPWViewWindow {
     func startPIPMode() {
         PIPWKit.startPIPMode()
     }
-    
+
     func stopPIPMode() {
         PIPWKit.stopPIPMode()
     }
-    
+
 }
 
 internal extension PIPWUsable where Self: PIPWViewWindow {
-    
+
     func pipDismiss(animated: Bool, completion: (() -> Void)?) {
         if animated {
             UIView.animate(withDuration: 0.15, animations: { [weak self] in
@@ -79,5 +79,5 @@ internal extension PIPWUsable where Self: PIPWViewWindow {
             completion?()
         }
     }
-    
+
 }
