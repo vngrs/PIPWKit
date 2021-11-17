@@ -81,9 +81,11 @@ open class PIPWKitEventDispatcher {
         case .full:
             rootWindow.frame = mainWindow.bounds
             rootViewController?.changingState(.full)
+            removeCornerRadius()
         case .pip:
             updatePIPFrame()
             rootViewController?.changingState(.pip)
+            applyCornerRadius()
         default:
             break
         }
@@ -106,6 +108,19 @@ open class PIPWKitEventDispatcher {
             rootWindow?.layer.shadowRadius = pipShadow.radius
         }
 
+        deviceNotificationObserver = NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification,
+                                                                            object: nil,
+                                                                            queue: nil) { [weak self] (noti) in
+                                                                                UIView.animate(withDuration: 0.15, animations: {
+                                                                                    self?.updateFrame()
+                                                                                }, completion:nil)
+        }
+    }
+
+    private func applyCornerRadius() {
+
+        let rootViewController: PIPWUsable? = rootWindow?.rootViewController as? PIPWUsable
+
         if let pipCorner = rootViewController?.pipCorner ?? rootWindow?.pipCorner {
             rootWindow?.layer.cornerRadius = pipCorner.radius
             rootWindow?.layer.masksToBounds = true
@@ -115,14 +130,12 @@ open class PIPWKitEventDispatcher {
                 }
             }
         }
+    }
 
-        deviceNotificationObserver = NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification,
-                                                                            object: nil,
-                                                                            queue: nil) { [weak self] (noti) in
-                                                                                UIView.animate(withDuration: 0.15, animations: {
-                                                                                    self?.updateFrame()
-                                                                                }, completion:nil)
-        }
+    private func removeCornerRadius() {
+
+        rootWindow?.layer.cornerRadius = 0
+        rootWindow?.layer.masksToBounds = false
     }
 
     private func didEnterFullScreen() {
@@ -201,7 +214,7 @@ open class PIPWKitEventDispatcher {
         case let y where y > mainWindow.frame.height - safeAreaInsets.bottom - vh:
             pipPosition = center.x < mainWindow.frame.width / 2.0 ? .bottomLeft : .bottomRight
         default:
-            pipPosition = center.x < mainWindow.frame.width / 2.0 ? .middleLeft : .middleRight
+            pipPosition = center.x < mainWindow.frame.width / 2.0 ? .bottomLeft : .bottomRight
         }
 
         let rootViewController: PIPWUsable? = rootWindow.rootViewController as? PIPWUsable

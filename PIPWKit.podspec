@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'PIPWKit'
-  s.version          = '1.2.2'
+  s.version          = '1.2.3'
   s.summary          = 'Picture in Picture Window for iOS'
 
 # This description is used to generate tags and improve search results.
