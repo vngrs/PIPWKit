@@ -122,6 +122,8 @@ open class PIPWKit {
     // MARK: - Private
     private static func reset() {
         PIPWKit.state = .none
+        PIPWKit.floatingWindow?.rootViewController?.view.removeFromSuperview()
+        PIPWKit.floatingWindow?.rootViewController = nil
         PIPWKit.floatingWindow?.removeFromSuperview()
         PIPWKit.floatingWindow = nil
         mainWindow?.makeKeyAndVisible()
